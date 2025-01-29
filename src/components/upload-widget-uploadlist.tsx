@@ -2,7 +2,7 @@ import { useUploads } from "../store/uploads";
 import { UploadWidgetUploadItem } from "./upload-widget-upload-item";
 
 export function UploadWidgetUploadList() {
-    const { uploads } = useUploads()
+    const uploads= useUploads(store => store.uploads)
     /**
      * const uploads = useUploads(store => store.uploads)
      * Ao passarmos a lista de uploads (store => store.uploads) como parâmetro, estamos buscando/
