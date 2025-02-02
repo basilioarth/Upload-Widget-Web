@@ -15,7 +15,9 @@ export type Upload = {
     abortController: AbortController
     status: 'progress' | 'success' | 'error' | 'canceled'
     originalSizeInBytes: number
+    compressedSizeInBytes?: number
     uploadSizeInBytes: number
+    remoteUrl?: string
 }
 
 type UploadState = {
@@ -56,12 +58,14 @@ export const useUploads = create<UploadState, [['zustand/immer', never]]>(
             try {
                 const compressedFile = await compressImage({
                     file: upload.file,
-                    maxWidth: 200,
-                    maxHeight: 200,
-                    quality: 0.5,
+                    maxWidth: 1000,
+                    maxHeight: 1000,
+                    quality: 0.8,
                 })
 
-                await uploadFileToStorage(
+                updateUpload(uploadId, { compressedSizeInBytes: compressedFile.size })
+
+                const { url } = await uploadFileToStorage(
                     { 
                         file: compressedFile,
                         onProgress(sizeInBytes) {
@@ -71,7 +75,7 @@ export const useUploads = create<UploadState, [['zustand/immer', never]]>(
                     { signal: upload.abortController.signal }
                 )
                 
-                updateUpload(uploadId, { status: 'success' })
+                updateUpload(uploadId, { status: 'success', remoteUrl: url })
             } catch (err) {
                 if (err instanceof CanceledError) {
                     updateUpload(uploadId, { status: 'canceled' })
@@ -133,16 +137,20 @@ export const usePendingUploads = () => {
 
         const { total, uploaded } = Array.from(store.uploads.values()).reduce(
             (acc, upload) => {
-                acc.total += upload.originalSizeInBytes
-                acc.uploaded += upload.uploadSizeInBytes
-
+                if(upload.compressedSizeInBytes) {
+                    acc.uploaded += upload.uploadSizeInBytes
+                }
+                
+                acc.total += upload.compressedSizeInBytes || upload.originalSizeInBytes
+                
                 return acc
             },
             { total: 0, uploaded: 0 }
         )
 
         const globalPercentage = Math.min(
-            Math.round((uploaded/total)*100)
+            Math.round((uploaded/total)*100),
+            100
         )
 
         return { isThereAnyPendingUploads, globalPercentage }

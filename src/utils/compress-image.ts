@@ -46,13 +46,13 @@ export function compressImage({
 
                 if (width > height) { // Imagem mais larga do que alta
                     if (width > maxWidth) {
-                        width = maxWidth // Limitando a largura à largura máxima
                         height *= maxWidth / width // A altura está diminuindo proporcionalmente à largura máxima
+                        width = maxWidth // Limitando a largura à largura máxima
                     }
                 } else { // Imagem mais altra do que larga
                     if (height > maxHeight) {
-                        height = maxHeight // Limitando a altura à altura máxima
                         width *= maxHeight / height // A largura está diminuindo proporcionalmente à alktura máxima
+                        height = maxHeight // Limitando a altura à altura máxima
                     }
                 }
 
