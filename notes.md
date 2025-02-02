@@ -15,3 +15,8 @@ O **Jotai**, por sua vez, segue uma ideia de **átomos**: **pequenos estados que
 No React, e no ZUSTAND isso não é diferente, quando vamos alterar o valor de uma informação nós **sempre temos que substituir essa informação por completo**. Em outras palavras, não podemos simplesmente modificar a informação. Por exemplo: se for um array, não podemos simplesmente adicionar mais um elemento ao final do array usando um array.push(element); temos que sempre retornar um array por inteiro usando, por exemplo, o recurso do spread: [...array, element].
 
 O Immer nos ajuda com isso, pois **remove essa necessidade criada pela imutabilidade do React**. Com ele nós podemos fazer as alterações na variável da maneira que a gente quiser (sem ter que ficar retornando a informação por inteiro) e **o próprio Immer vai calcular como que ele tem que fazer essa alteração de uma maneira imutável**.
+
+#### Slot Component
+
+Um Slot Component é uma tática que pode ser utilizada quando queremos criar um componente, mantendo a sua estilização e seu funcionamento, mas querendo que ele seja renderizado como uma outra tag no HTML.
+Podemos utilizar a biblioteca react-slot do react-ui.
