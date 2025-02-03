@@ -20,3 +20,7 @@ O Immer nos ajuda com isso, pois **remove essa necessidade criada pela imutabili
 
 Um Slot Component é uma tática que pode ser utilizada quando queremos criar um componente, mantendo a sua estilização e seu funcionamento, mas querendo que ele seja renderizado como uma outra tag no HTML.
 Podemos utilizar a biblioteca react-slot do react-ui.
+
+#### Ensinamentos
+
+Esse módulos nos ensinou que são nas coisas simples que abrimos mais espaço para fazermos essas coisas de uma maneira muito bem-feita.
